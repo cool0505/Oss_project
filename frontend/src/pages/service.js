@@ -2,18 +2,11 @@
 import axios from 'axios';
 //import Cookies from 'js-cookie';
 
-export const fetchLogin = async ({ id, pw }) => {
-  
-  const test = {
-    id,
-    pw,
-  };
+export const fetchLogin = async (test) => {
   console.log(test)
+  
   //하는중 원래는 아래쪽
-  axios.post('http://119.194.24.174:3000/user/login', {
-        id,
-        pw,
-    })
+  axios.post('http://192.168.0.57:3000/login', test)
     .then(function (response) {
         console.log(response.data.result)
         if(response.data.result === 'success')
