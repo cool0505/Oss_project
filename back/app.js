@@ -1,19 +1,19 @@
 import express from "express";
 import path from "path";
 import bodyParser from "body-parser";
-import router from "./src/routes/index.js";
-
+import Router from "./src/index.js";
 const app = express();
-const port = 3000;
+
 const __dirname = path.resolve();
+
+app.set("port",process.env.PORT || 3000);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
 
 app.use(express.static(__dirname));
 
-app.use("/user",router);
-
-app.listen(port,()=>{
+app.use("/",Router);
+app.listen(app.get("port"),()=>{
     console.log("start server");
 });
