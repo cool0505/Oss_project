@@ -12,6 +12,8 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { fetchSignup } from "../server/socket";
+
 
 function Copyright(props) {
   return (
@@ -32,12 +34,19 @@ export default function SignUp() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-        name: data.get('Name'), 
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+      const Name=data.get('Name');
+      const email=data.get('email');
+      const password=data.get('password');
+  
+    const req = {
+        Name,
+        email,
+        password
+      };
+    fetchSignup(req);
+    console.log(req)
   };
+
 
   return (
     <ThemeProvider theme={theme}>
