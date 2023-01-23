@@ -2,9 +2,10 @@ import * as React from 'react';
 import Button from '../components/Button';
 import Typography from '../components/Typography';
 import ProductHeroLayout from './ProductHeroLayout';
+import backgroundImage from '../image/main.jpg'
 
-const backgroundImage =
-  'https://images.unsplash.com/photo-1534854638093-bada1813ca19?auto=format&fit=crop&w=1400';
+// const backgroundImage =
+//   '../image/main.jpg';
 
 export default function ProductHero() {
   return (
@@ -21,24 +22,24 @@ export default function ProductHero() {
         src={backgroundImage}
         alt="increase priority"
       />
-      <Typography color="inherit" align="center" variant="h2" marked="center">
-        Upgrade your Sundays
+      <Typography color="inherit" align="center" variant="h2" marked="center" >
+        Upgrade your Body
       </Typography>
       <Typography
         color="inherit"
         align="center"
         variant="h5"
-        sx={{ mb: 4, mt: { sx: 4, sm: 10 } }}
+        sx={{ mb: '3vw', mt: '3vw'}}
       >
-        Enjoy secret offers up to -70% off the best luxury hotels every Sunday.
+        It is health that is real wealth and not pieces of gold and silver. (Mahatma Gandhi) 
       </Typography>
       <Button
         color="secondary"
         variant="contained"
-        size="large"
+        size="mid"
         component="a"
-        href="/premium-themes/onepirate/sign-up/"
-        sx={{ minWidth: 200 }}
+        href="/Signup"
+        sx={{ minWidth: 100 }}
       >
         Register
       </Button>

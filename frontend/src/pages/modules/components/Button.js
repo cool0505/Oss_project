@@ -16,6 +16,11 @@ const ButtonRoot = styled(MuiButton)(({ theme, size }) => ({
     padding: theme.spacing(1, 3),
     fontSize: theme.typography.pxToRem(13),
   }),
+  ...(size === 'mid' && {
+    borderRadius: 50,
+    padding: theme.spacing(1, 3),
+    fontSize: theme.typography.pxToRem(15),
+  }),
   ...(size === 'large' && {
     padding: theme.spacing(2, 5),
     fontSize: theme.typography.pxToRem(16),

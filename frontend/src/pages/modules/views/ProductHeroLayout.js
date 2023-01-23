@@ -1,20 +1,21 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
-
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
+
 
 const ProductHeroLayoutRoot = styled('section')(({ theme }) => ({
   color: theme.palette.common.white,
   position: 'relative',
   display: 'flex',
   alignItems: 'center',
-  [theme.breakpoints.up('sm')]: {
-    height: '80vh',
-    minHeight: 500,
-    maxHeight: 1300,
-  },
+  height: '100vh',
+  // [theme.breakpoints.up('sm')]: {
+  //   height: '100vh',
+  //   // minHeight: 500,
+  //   // maxHeight: 1300,
+  // },
 }));
 
 const Background = styled(Box)({
@@ -30,20 +31,21 @@ const Background = styled(Box)({
 
 function ProductHeroLayout(props) {
   const { sxBackground, children } = props;
+  console.log()
 
   return (
     <ProductHeroLayoutRoot>
       <Container
         sx={{
-          mt: 3,
-          mb: 14,
+          mt: '3vh',
+          mb: '14vh',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
         }}
       >
         <img
-          src="/static/themes/onepirate/productHeroWonder.png"
+          src="img/productHeroWonder.png"
           alt="wonder"
           width="147"
           height="80"
@@ -64,7 +66,7 @@ function ProductHeroLayout(props) {
         <Background sx={sxBackground} />
         <Box
           component="img"
-          src="/static/themes/onepirate/productHeroArrowDown.png"
+          src="img/productHeroArrowDown.png"
           height="16"
           width="12"
           alt="arrow down"
