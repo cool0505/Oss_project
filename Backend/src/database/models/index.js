@@ -13,4 +13,6 @@ const sequelize = new Sequelize({
     dialect : "mysql"
 });
 
+console.log("DB Connect!");
+
 export default sequelize;

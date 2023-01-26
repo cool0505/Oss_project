@@ -19,11 +19,6 @@ app.use(cors());
 //index connect
 app.use("/",userRouter);
 
-// //404
-// app.get((req, res, next) => {
-//     res.status(404).send("404지롱?");
-// });
-
 app.listen(app.get('port'),()=>{
     console.log("start server");
 });

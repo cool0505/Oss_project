@@ -13,28 +13,28 @@ Users.init(
     {
         id:{
             type: DataTypes.STRING(20),
-            primaryKey:true
+            primaryKey : true
         },
         pw:{
             type: DataTypes.STRING(60),
-            allowNull:false
+            allowNull : false
         },
         name:{
             type: DataTypes.STRING(20),
-            allowNull:false
+            allowNull : false
         },
         nickname:{
             type: DataTypes.STRING(20),
-            allowNull:false,
-            unique: true
+            allowNull : false,
+            unique : true
         },
 
     },
 
     {
         sequelize,
-        modelName: "Users",
-        tableName: "user",
-        timestamps: false
+        modelName : "Users",
+        tableName : "user",
+        timestamps : false
     }
 )
