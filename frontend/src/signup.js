@@ -31,17 +31,29 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function SignUp() {
-const [name, setname] = useState('');
-console.log(name)
 
-const onNameHandler = (event) => {
-    setname(event.currentTarget.value)
-    const id=name
+export default function SignUp() {
+const [cor, setcor] = useState(false);
+
+async function Namecheck(e){
+    
+    const id=e.target.value
+    console.log("asdasd"+id)
     const req = {
         id,
       };
-    fetchcheckId(req);
+    if(await fetchcheckId(req)=='success'){
+        setcor(false)
+    }
+    else if (await fetchcheckId(req)=='fail'){
+        console.log("7777777777777")
+        setcor(true)
+        console.log(cor)
+    }
+} 
+
+const onNameHandler = (e) => {
+    Namecheck(e)
 }
 
 
@@ -86,15 +98,16 @@ const onNameHandler = (event) => {
             <Grid container spacing={2}>
               <Grid item xs={12} >
                 <TextField
+                    error={cor}
                   autoComplete="given-name"
                   name="Name"
                   fullWidth
                   required
                   id="Name"
                   label="Name"
-                  autoFocus
-                    value={name}
-                    onChange={onNameHandler}
+                  autoFocus       
+                  onChange={onNameHandler}
+                  
                 />
               </Grid>
               

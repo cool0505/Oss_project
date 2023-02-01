@@ -1,6 +1,8 @@
 //동기식 방식 ( async await 사용!!!!!)
 import axios from 'axios';
 import user from './user';
+import debounce from 'lodash/debounce';
+
 //import Cookies from 'js-cookie';
 
 export const fetchLogin = async (test) => {
@@ -21,14 +23,13 @@ export const fetchLogin = async (test) => {
     }); 
     
   };
-  export const fetchcheckId = async (test) => {
+  export const fetchcheckId = debounce(async (test) => {
     console.log(test)
-    
     //하는중 원래는 아래쪽
-    await axios.post('http://192.168.1.9:3000/signup/check', test)
+    return await axios.post('http://192.168.1.9:3000/signup/check', test)
       .then(function (response) {
           console.log(response.data.sc)
-          if(response.data.sc === '200'){
+          if(response.data.sc == '200'){
             console.log('sdfsdfsdf') 
               return 'success';
           }
@@ -38,8 +39,9 @@ export const fetchLogin = async (test) => {
       .catch(function (error) {
           console.log(error);
           return 'fail';
-      });   
-    };
+      }); 
+    },500);
+
     export const fetchSignup = async (test) => {
       console.log(test)
       
