@@ -5,39 +5,58 @@ const userController = {
     login : async (req, res) => {
         try {
             const response = await userService.login(req.body);
-            res.status(201).json(response);
+            console.log(response);
+            if(response.sc == "400") {
+                return res.json(response);
+            }
+            res.json(response);
         } catch (err) {
-            res.status(400).json(err);
+            res.json(err);
         }
+    },
+
+    check : async(req, res) => {
+        const response = await userService.check(req.body.id);
+        res.json(response);
     },
 
     signUp : async (req, res) => {
         try {
             const response = await userService.signUp(req.body);
-            res.status(201).json(response);
+            res.json(response);
         } catch (err) {
-            res.status(400).json(err);
+            res.json(err);
         }
     },
 
     logout : async (req, res) => {
         try {
             const response = await userService.logout(req.body.id);
-            res.status(201).json(response);
+            res.json(response);
         } catch (err) {
-            res.status(400).json(err);
+            res.json(err);
         }
     },
 
-    withdrawal : async (req, res) => {
+    secede : async (req, res) => {
         try {
-            const response = await userService.withdrawal(req.body.id);
-            res.status(201).json(response);
+            const response = await userService.secede(req.body.id);
+            res.json(response);
         } catch (err) {
             console.log(err);
-            res.status(400).json(err);
+            res.json(err);
+        }
+    },
+
+    getNutrient : async (req, res) => {
+        try {
+            const nutrient = await userService.getNutrient(req.body.id);
+            res.json(nutrient);
+        } catch (err) {
+            res.json(err);
         }
     }
+
 }
 
 export { userController };

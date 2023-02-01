@@ -6,6 +6,13 @@ import { verifyToken } from "../middlewares/verifyToken.js";
 
 const router = express.Router();
 
+//Main
+router.post(
+    "/dashboard/app",
+    verifyToken,
+    userController.getNutrient
+);
+
 //로그인
 router.post(
     "/login", 
@@ -16,10 +23,16 @@ router.post(
     ],
         userController.login
 );
-    
+
+//ID 중복 검사
+router.post(
+    "/signup/check",
+    userController.check
+);
+
 //회원가입
 router.post(
-    "/signUp", 
+    "/signup", 
     [
         check("id").exists(),
         check("pw").exists().isLength({min : 8, max : 16}),
@@ -35,7 +48,7 @@ router.delete(
 
 //회원탈퇴
 router.delete(
-    "/withdrawal", verifyToken, userController.withdrawal
+    "/secede", verifyToken, userController.secede
 );
 
 export default router;
