@@ -36,7 +36,7 @@ const userService = {
         } else return { sc : 400 };
     },
 
-    signUp: async (body) => {
+    signup: async (body) => {
 
         const bcryptPw = bcrypt.hashSync(body.pw, 10);
         body.pw = bcryptPw;
@@ -49,7 +49,7 @@ const userService = {
             return { sc : 400 };
         }
 
-        const response = await User.signUp(body);
+        const response = await User.signup(body);
     
         if (response) {
             return {

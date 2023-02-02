@@ -38,7 +38,7 @@ router.post(
         check("pw").exists().isLength({min : 8, max : 16}),
         validatorErrorChecker // 발동
     ],
-    userController.signUp
+    userController.signup
 );
 
 //로그아웃

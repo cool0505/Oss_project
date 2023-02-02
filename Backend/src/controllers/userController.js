@@ -20,9 +20,9 @@ const userController = {
         res.json(response);
     },
 
-    signUp : async (req, res) => {
+    signup : async (req, res) => {
         try {
-            const response = await userService.signUp(req.body);
+            const response = await userService.signup(req.body);
             res.json(response);
         } catch (err) {
             res.json(err);

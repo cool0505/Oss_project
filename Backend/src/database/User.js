@@ -8,7 +8,7 @@ const User = {
         return user;
     },
 
-    signUp: async (client) => {
+    signup: async (client) => {
         
         const user = await Users.create({
             id: `${client.id}`,
