@@ -16,6 +16,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { fetchSignup,fetchcheckId } from "./servies";
 
 
+
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -161,3 +162,5 @@ const onNameHandler = (e) => {
     </ThemeProvider>
   );
 }
+
+///중복검사 전에 회원가입 규칙 작성
