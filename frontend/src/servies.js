@@ -79,3 +79,22 @@ export const fetchLogin = async (test) => {
           }); 
           
         };
+//수정 필요 !! 
+        export const checkmain = async (test) => {
+          console.log(test)
+          
+          //하는중 원래는 아래쪽
+          return await axios.post('http://192.168.1.9:3000/main', test)
+            .then(function (response) {
+                console.log(response.data.sc)
+                if(response.data.sc == '200')     
+                  return 'success'
+                else
+                  return 'fail';
+            })
+            .catch(function (error) {
+                console.log(error);
+                return 'fail';
+            }); 
+            
+          };
