@@ -44,7 +44,7 @@ export const fetchLogin = async (test) => {
 
     export const fetchSignup = async (test) => {
       console.log(test)
-      
+  
       //하는중 원래는 아래쪽
       axios.post('http://192.168.1.9:3000/signup/check', test)
         .then(function (response) {
@@ -79,7 +79,7 @@ export const fetchLogin = async (test) => {
           }); 
           
         };
-//수정 필요 !! 
+//수정 필요 !! 필요필요
         export const checkmain = async (test) => {
           console.log(test)
           
