@@ -2,14 +2,15 @@ import  express  from "express";
 import { check } from "express-validator";
 import { validatorErrorChecker } from "../middlewares/validator.js";
 import { userController } from "../controllers/userController.js";
-import { verifyToken } from "../middlewares/verifyToken.js";
+import { verifyAccessToken } from "../middlewares/verifyAccessToken.js";
+import { verifyRefreshToken } from "../middlewares/verifyRefreshToken.js";
 
 const router = express.Router();
 
-//Main
+//Main + login시 영양제 정보 전체 전달
 router.post(
     "/dashboard/app",
-    verifyToken,
+    verifyAccessToken,
     userController.getNutrient
 );
 
@@ -43,12 +44,17 @@ router.post(
 
 //로그아웃
 router.delete(
-    "/logout", verifyToken, userController.logout
+    "/logout", verifyAccessToken, userController.logout
 );
 
 //회원탈퇴
 router.delete(
-    "/secede", verifyToken, userController.secede
+    "/secede", verifyAccessToken, userController.secede
+);
+
+//token 재발급
+router.post(
+    "/refresh", verifyRefreshToken
 );
 
 export default router;

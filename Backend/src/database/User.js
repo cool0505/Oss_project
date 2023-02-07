@@ -45,7 +45,7 @@ const User = {
     },
 
     getNutrient : async (id) => {
-        const nutrient = await UserNutrient.findAll({ where : { id : `${id}`}, raw : false});
+        const nutrient = await UserNutrient.findAll({ where : { id : `${id}`}, raw : true});
         return nutrient;
     }
 };

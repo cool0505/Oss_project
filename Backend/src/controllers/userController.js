@@ -5,7 +5,6 @@ const userController = {
     login : async (req, res) => {
         try {
             const response = await userService.login(req.body);
-            console.log(response);
             if(response.sc == "400") {
                 return res.json(response);
             }
@@ -30,7 +29,7 @@ const userController = {
     },
 
     logout : async (req, res) => {
-        try {
+        try {   
             const response = await userService.logout(req.body.id);
             res.json(response);
         } catch (err) {

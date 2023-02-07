@@ -27,7 +27,7 @@ const userService = {
                     name,
                     nickname,
                     accessToken,
-                    refreshToken,
+                    refreshToken
                     //nutrient
                 };
             }  else {
@@ -87,6 +87,7 @@ const userService = {
     secede : async (id) => {
 
         const user = await User.findById(id);
+
         if(!user) {
             return { msg : "unknown account..!" };
         }
@@ -99,6 +100,7 @@ const userService = {
     },
 
     getNutrient : async (id) => {
+
         const nutrient = await User.getNutrient(id);
 
         return {
