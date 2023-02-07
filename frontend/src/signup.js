@@ -35,18 +35,21 @@ const theme = createTheme();
 
 export default function SignUp() {
 const [cor, setcor] = useState(false);
-
+const [name, setname] = useState("");
 async function Namecheck(e){
     
-    const id=e.target.value
-    console.log("asdasd"+id)
+    setname=e.target.value
+    console.log("asdasd"+name)
     const req = {
-        id,
+        name,
       };
-    if(await fetchcheckId(req)=='success'){
+    const returncheck=await fetchcheckId(req)
+    console.log(returncheck)
+    if(returncheck=='success'){
+        console.log('99999999999')
         setcor(false)
     }
-    else if (await fetchcheckId(req)=='fail'){
+    else if (returncheck=='fail'){
         console.log("7777777777777")
         setcor(true)
         console.log(cor)
@@ -106,6 +109,7 @@ const onNameHandler = (e) => {
                   required
                   id="Name"
                   label="Name"
+                  value={name}
                   autoFocus       
                   onChange={onNameHandler}
                   

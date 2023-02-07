@@ -17,10 +17,18 @@ import Signup from './signup';
 export default function Router() {
   const routes = useRoutes([
     {
+      path: '/',
+      element: <Loginp />,
+      
+    },
+    {
+      path: '*',
+      element: <Navigate to="/404" replace />,
+    },
+    {
       path: '/dashboard',
       element: <DashboardLayout />,
       children: [
-        { element: <Navigate to="/dashboard/app" />, index: true },
         { path: 'app', element: <DashboardAppPage /> },
         { path: 'user', element: <UserPage /> },
         { path: 'products', element: <ProductsPage /> },
@@ -31,10 +39,7 @@ export default function Router() {
     //   path: 'login',
     //   element: <LoginPage />,
     // },
-    {
-      path: '/login',
-      element: <Loginp />,
-    },
+
     {
       path: '/signup',
       element: <Signup />,
@@ -42,15 +47,11 @@ export default function Router() {
     {
       element: <SimpleLayout />,
       children: [
-        { element: <Navigate to="/dashboard/app" />, index: true },
         { path: '404', element: <Page404 /> },
         { path: '*', element: <Navigate to="/404" /> },
       ],
     },
-    {
-      path: '*',
-      element: <Navigate to="/404" replace />,
-    },
+
   ]);
 
   return routes;
