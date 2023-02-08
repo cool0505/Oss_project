@@ -36,29 +36,6 @@ const theme = createTheme();
 export default function SignUp() {
 const [cor, setcor] = useState(false);
 const [name, setname] = useState("");
-async function Namecheck(e){
-    
-    setname=e.target.value
-    console.log("asdasd"+name)
-    const req = {
-        name,
-      };
-    const returncheck=await fetchcheckId(req)
-    console.log(returncheck)
-    if(returncheck=='success'){
-        console.log('99999999999')
-        setcor(false)
-    }
-    else if (returncheck=='fail'){
-        console.log("7777777777777")
-        setcor(true)
-        console.log(cor)
-    }
-} 
-
-const onNameHandler = (e) => {
-    Namecheck(e)
-}
 
 
 
@@ -102,18 +79,25 @@ const onNameHandler = (e) => {
             <Grid container spacing={2}>
               <Grid item xs={12} >
                 <TextField
-                    error={cor}
+                  error={cor}
                   autoComplete="given-name"
                   name="Name"
-                  fullWidth
                   required
                   id="Name"
-                  label="Name"
+                  label="아이디"
                   value={name}
                   autoFocus       
-                  onChange={onNameHandler}
+                  sx={{width:'75%'}}
+
                   
                 />
+                 <Button
+                 type="submit"
+                  variant="contained"
+                  sx={{ width: '10%', ml: 1, mt: 1, mb: 1}}
+                >
+                 확인
+                </Button>
               </Grid>
               
               <Grid item xs={12}>
@@ -131,7 +115,18 @@ const onNameHandler = (e) => {
                   required
                   fullWidth
                   name="password"
-                  label="Password"
+                  label="비밀번호"
+                  type="password"
+                  id="password"
+                  autoComplete="new-password"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="password"
+                  label="비밀번호 재확인"
                   type="password"
                   id="password"
                   autoComplete="new-password"
