@@ -14,6 +14,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { fetchSignup,fetchcheckId } from "./servies";
+import { useForm } from "react-hook-form";
+
 
 
 
@@ -36,24 +38,30 @@ const theme = createTheme();
 export default function SignUp() {
 const [cor, setcor] = useState(false);
 const [name, setname] = useState("");
+const { register, handleSubmit, errors } = useForm();
+
+const onSubmit = (data) => {
+  console.log(data);
+};
 
 
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-      const Name=data.get('Name');
-      const email=data.get('email');
-      const password=data.get('password');
+
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   const data = new FormData(event.currentTarget);
+  //     const Name=data.get('Name');
+  //     const email=data.get('email');
+  //     const password=data.get('password');
   
-    const req = {
-        Name,
-        email,
-        password
-      };
-    fetchSignup(req);
-    console.log(req)
-  };
+  //   const req = {
+  //       Name,
+  //       email,
+  //       password
+  //     };
+  //   fetchSignup(req);
+  //   console.log(req)
+  // };
 
 
 
@@ -72,6 +80,7 @@ const [name, setname] = useState("");
         >
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
           </Avatar>
+          <form onSubmit={handleSubmit(onSubmit)}>
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
@@ -112,7 +121,7 @@ const [name, setname] = useState("");
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  required
+                  required 
                   fullWidth
                   name="password"
                   label="비밀번호"
@@ -155,7 +164,9 @@ const [name, setname] = useState("");
               </Grid>
             </Grid>
           </Box>
+          </form> 
         </Box>
+        
         <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>
