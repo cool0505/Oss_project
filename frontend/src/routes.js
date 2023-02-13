@@ -21,6 +21,7 @@ export default function Router() {
       element: <Loginp />,
       
     },
+
     {
       path: '*',
       element: <Navigate to="/404" replace />,
