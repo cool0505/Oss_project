@@ -23,7 +23,7 @@ export const fetchLogin = async (test) => {
     }); 
     
   };
-  export const fetchcheckId = debounce(async (test) => {
+  export const fetchcheckId = async (test) => {
     console.log(test)
     //하는중 원래는 아래쪽
     return await axios.post('http://192.168.1.9:3000/signup/check', test)
@@ -40,7 +40,7 @@ export const fetchLogin = async (test) => {
           console.log(error);
           return 'fail';
       }); 
-    },500);
+    };
 
     export const fetchSignup = async (test) => {
       console.log(test)
@@ -98,3 +98,5 @@ export const fetchLogin = async (test) => {
             }); 
             
           };
+
+          

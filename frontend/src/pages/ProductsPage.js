@@ -6,7 +6,7 @@ import { Container, Stack, Typography } from '@mui/material';
 import { ProductSort, ProductList, ProductCartWidget, ProductFilterSidebar } from '../sections/@dashboard/products';
 // mock
 import PRODUCTS from '../_mock/products';
-
+import Paging from '../Paging'
 // ----------------------------------------------------------------------
 
 export default function ProductsPage() {
@@ -44,6 +44,7 @@ export default function ProductsPage() {
 
         <ProductList products={PRODUCTS} />
         <ProductCartWidget />
+        <Paging/>
       </Container>
     </>
   );

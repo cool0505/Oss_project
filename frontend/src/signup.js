@@ -14,6 +14,9 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { fetchSignup,fetchcheckId } from "./servies";
+import CheckIcon from '@mui/icons-material/Check';
+import InputAdornment from '@mui/material/InputAdornment';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
 
 
@@ -39,14 +42,20 @@ export default function SignUp() {
 
   const [username,setusername] = useState('');
   const [username_error,setusername_error] = useState('');
-  const [username_messege,setusername_message] = useState('');
+  const [username_message,setusername_message] = useState('');
+  const [username_check,setusername_check] = useState('');
 
   const [email,setemail] = useState('');
   const [email_error,setemail_error] = useState('');
-  const [email_messege,setemail_message] = useState('');
+  const [email_message,setemail_message] = useState('');
 
   const [password,setpassword] = useState('');
+  const [password_error,setpassword_error] = useState('');
+  const [password_message,setpassword_message] = useState('');
 
+  const [confirmpassword,setconfirmpassword] = useState('');
+  const [confirmpassword_error,setconfirmpassword_error] = useState('');
+  const [confirmpassword_message,setconfirmpassword_message] = useState('');
   const username_onChange = (e)=> {
     setusername(e.target.value)
   }
@@ -55,11 +64,13 @@ export default function SignUp() {
     	username_validation();
     } 
   }, [username])
-  const username_onBlur = (e)=> {
+  async function username_onBlur(e){
     const req = {
       username
     };
-    fetchcheckId(req)
+    const checkreq = await fetchcheckId(req)
+    console.log(checkreq)
+    setusername_check(checkreq)
   }
 
   const username_validation =()=>{
@@ -76,6 +87,18 @@ export default function SignUp() {
     else{
       setusername_error(false)
       setusername_message('')
+    }
+  }
+
+  function usernamecheckicon() {
+    if(username_check=='success'){
+      return (<CheckIcon fontSize="small"/> )
+    }
+    else if (username_check=='fail'){
+      return (<HighlightOffIcon fontSize="small"/>)
+    }
+    else{
+      return('')
     }
   }
 
@@ -108,14 +131,90 @@ export default function SignUp() {
       setemail_message('사용가능한 이메일입니다.')
     }
   } 
-  useEffect(() => {  // Email 형식 체크
-    var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-    if(regExp.test(password)){
-      console.log(password)
+
+  const password_onChange = (e)=> {
+    setpassword(e.target.value)
+    
+  }
+  useEffect(() => {
+  	if(password.length>0) {
+    	password_validation();
+    } 
+  }, [password])
+  const password_onBlur = (e)=> {
+    const req = {
+      password
     };
-}, [password])
+    fetchcheckId(req)
+  }
 
+const password_validation =()=>{
 
+  if(!/^[a-zA-Z0-9]{10,255}$/.test(password)){
+  
+    setpassword_message('숫자와 영문자 조합으로 10자리이상 사용해야 합니다.');
+    setpassword_error(true)
+ 
+  
+  }
+  
+  
+  
+  var checkNumber = password.search(/[0-9]/g);
+  
+  var checkEnglish = password.search(/[a-z]/ig);
+  
+  if(checkNumber <0 || checkEnglish <0){
+  
+  setpassword_message("숫자와 영문자를 혼용하여야 합니다.");
+  setpassword_error(true)
+
+  }
+  
+  else if(/(\w)\1\1\1/.test(password)){
+  
+  setpassword_message('444같은 문자를 4번 이상 사용하실 수 없습니다.');
+  setpassword_error(true)
+
+  }
+  
+  else if(username.length>0 && password.search(username) > -1){
+  
+    setpassword_message("비밀번호에 아이디가 포함되었습니다.");
+    setpassword_error(true)
+
+  
+  }
+  else{
+    setpassword_message("");
+    setpassword_error(false)
+  }
+  }
+  const confirmpassword_onChange = (e)=> {
+    setconfirmpassword(e.target.value)
+    
+  }
+  // useEffect(() => {
+  // 	if(confirmpassword.length>0) {
+  //   	confirmpassword_validation();
+  //   } 
+  // }, [confirmpassword])
+  
+  const confirmpassword_onBlur = (e)=> {
+    confirmpassword_validation();
+  }
+
+  const confirmpassword_validation =()=>{
+    if(!(confirmpassword==password)){
+      setconfirmpassword_error(true)
+      setconfirmpassword_message("비밀번호가 다릅니다.")
+    }
+
+    else{
+      setconfirmpassword_error(false)
+      setconfirmpassword_message('')
+    }
+  } 
   const handleSubmit = (event) => {
 
     event.preventDefault();
@@ -162,17 +261,24 @@ export default function SignUp() {
                   required
                   id="username"
                   label="아이디"
-                  autoFocus      
+                  autoFocus   
+                  fullWidth
                   value={username} 
-                  sx={{width:'75%'}}
                   onBlur={username_onBlur}
                   onChange={username_onChange}
                   error={username_error}
-                  helperText={username_messege}
+                  helperText={username_message}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                          {usernamecheckicon()}
+                      </InputAdornment>
+                    ),
+                  }}
                 />
-
               </Grid>
-              
+                       
+    
               <Grid item xs={12}>
                 <TextField
                   required
@@ -185,7 +291,7 @@ export default function SignUp() {
                   onBlur={email_onBlur}
                   onChange={email_onChange}
                   error={email_error}
-                  helperText={email_messege}
+                  helperText={email_message}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -197,7 +303,11 @@ export default function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
-                  // value={password}
+                  value={password} 
+                  onBlur={password_onBlur}
+                  onChange={password_onChange}
+                  error={password_error}
+                  helperText={password_message}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -206,8 +316,13 @@ export default function SignUp() {
                   fullWidth
                   name="confirmpassword"
                   label="비밀번호 재확인"
-                  type="confirmpassword"
+                  type="password"
                   id="confirmpassword"
+                  value={confirmpassword} 
+                  onBlur={confirmpassword_onBlur}
+                  onChange={confirmpassword_onChange}
+                  error={confirmpassword_error}
+                  helperText={confirmpassword_message}
                   
                 />
               </Grid>
