@@ -41,20 +41,20 @@ const theme = createTheme();
 export default function SignUp() {
 
   const [username,setusername] = useState('');
-  const [username_error,setusername_error] = useState('');
+  const [username_error,setusername_error] = useState(false);
   const [username_message,setusername_message] = useState('');
   const [username_check,setusername_check] = useState('');
 
   const [email,setemail] = useState('');
-  const [email_error,setemail_error] = useState('');
+  const [email_error,setemail_error] = useState(false);
   const [email_message,setemail_message] = useState('');
 
   const [password,setpassword] = useState('');
-  const [password_error,setpassword_error] = useState('');
+  const [password_error,setpassword_error] = useState(false);
   const [password_message,setpassword_message] = useState('');
 
   const [confirmpassword,setconfirmpassword] = useState('');
-  const [confirmpassword_error,setconfirmpassword_error] = useState('');
+  const [confirmpassword_error,setconfirmpassword_error] = useState(false);
   const [confirmpassword_message,setconfirmpassword_message] = useState('');
   const username_onChange = (e)=> {
     setusername(e.target.value)
