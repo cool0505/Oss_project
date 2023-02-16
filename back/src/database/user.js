@@ -1,36 +1,29 @@
 import {Users} from "./models/user.js"
 import {UserInfo} from "./models/userInfo.js"
 const User={
-    login: async (id) =>{
-        const user = await Users.findOne({where:{id:`${id}`}, raw:true})
-        return user
+    FindId: async (id) =>{ //유저 테이블에 입력받은 ID 값이 있는지 확인 
+        const res = await Users.findOne({where:{id:`${id}`}, raw:true})
+        return res;
     },
-    SignUp: async (client) =>{
-        const user = await Users.create({
-            id:`${client.id}`,
-            pw:`${client.pw}`,
-            name:`${client.name}`,
-            nickname:`${client.nickname}`});
+    AddUser: async (client) =>{ //회원가입 ID가 기본키로 설정되어있어 중복된 ID가 들어오면 에러를 리턴한다
+        const res = await Users.create(client);
         await UserInfo.create({id:`${client.id}`});
-        return user
-        
+        return res;
     },
-    UserInfo: async (id) =>{
-        const user2 = await UserInfo.findOne({where:{id:`${id}`}, raw:true});
-        return user2
+    FindUserInfo: async (id) =>{ //입력받은 유저 에 대한 신체정보를 받아온다
+        const res = await UserInfo.findOne({where:{id:`${id}`}, raw:true});
+        return res;
     },
-    UpdateUserInfo: async (client) =>{
-        const user2 = await UserInfo.update({
+    UpdateInfo: async (client) =>{ //입력 받은 유저의 신체정보를 반영한다.
+        const res = await UserInfo.update({
             age: `${client.age}`,
             gender: `${client.gender}`,
             height: `${client.height}`,
-            weight: `${client.weight}`,
-            nutrients: `${client.nutrients}`,
-            count: `${client.count}`  
+            weight: `${client.weight}`, 
         },{
             where:{id:`${client.id}`}
         });
-        return user2
+        return res;
     } 
 }
 export default User;

@@ -1,10 +1,8 @@
-import sequelize from "../db.js";
+import sequelize from "../config/db.js";
 import { DataTypes, Model } from "sequelize";
-export class UserInfo extends Model{
-    toJSON(){
-        return super.toJSON();
-    }
-}
+export class UserInfo extends Model{ //유저 신체정보 DB
+
+};
 UserInfo.init(
     {
         id:{
@@ -27,14 +25,7 @@ UserInfo.init(
             type: DataTypes.INTEGER,
             allowNull:true,
         },
-        nutrients:{
-            type: DataTypes.STRING(20),
-            allowNull:true
-        },
-        count:{
-            type: DataTypes.INTEGER,
-            allowNull:true,
-        },
+
     },
     {
         sequelize,
@@ -43,4 +34,4 @@ UserInfo.init(
         timestamps: false,
 
     }
-)
+);

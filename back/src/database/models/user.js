@@ -1,10 +1,8 @@
-import sequelize from "../db.js";
+import sequelize from "../config/db.js";
 import { DataTypes, Model } from "sequelize";
-export class Users extends Model{
-    toJSON(){
-        return super.toJSON();
-    }
-}
+export class Users extends Model{ //유저 정보 DB
+
+};
 Users.init(
     {
         id:{
@@ -19,7 +17,7 @@ Users.init(
             type: DataTypes.STRING(20),
             allowNull:false
         },
-        nickname:{
+        email:{
             type: DataTypes.STRING(20),
             allowNull:false,
             unique: true
@@ -33,5 +31,5 @@ Users.init(
         timestamps: false,
 
     }
-)
+);
 
