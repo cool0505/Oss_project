@@ -10,6 +10,7 @@ const jwt_utils = {
 
     //access token 발급
     accessToken : (id) => {
+        //expiresIn = "1h" == 60 * 60 (초 단위)
         const token = jwt.sign({ id : id }, secretKey, { expiresIn : 60 * 60 });
         return token;
     },

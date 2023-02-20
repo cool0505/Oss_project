@@ -4,6 +4,7 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import morgan from "morgan";
 import userRouter from "./routes/userRouter.js";
+import nutritionalRouter from "./routes/nutritionalRouter.js";
 
 const app = express();
 const __dirname = path.resolve();
@@ -16,8 +17,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false})); //extended 는 중첩된 객체표현을 허용할지 말지 정함 객체 안에 객체를 파싱할 수 있게하려면 true. true = qs, false querystring
 app.use(cors());
 
-//index connect
-app.use("/",userRouter);
+app.use("/",userRouter); //index connect
+app.use("/nutritional", nutritionalRouter); //nutrition connect
 
 app.listen(app.get('port'),()=>{
     console.log("start server");

@@ -10,7 +10,7 @@ const verifyRefreshToken = async (req, res, next) => {
         const userAccess = req.headers.authorization;
         const refreshToken = req.headers.refresh;
         const result = jwt_utils.verifyAccessToken(userAccess);
-        const decoded = jwt.decode(userAccess);
+        const decoded = jwt.decode(userAccess).id;
         
         console.log(decoded); // jwt access token + refresh token 유무 확인
         
@@ -21,7 +21,7 @@ const verifyRefreshToken = async (req, res, next) => {
             });
         }
         
-        const userId = decoded.id.id; //why id.id? jwt.js의 verifyAccessToken return에서 id : decoded.id에서 id로 묶이는 바람에 id.id로 나오는데 해결을 할 수가 없음
+        const userId = decoded.id; //why id.id? jwt.js의 verifyAccessToken return에서 id : decoded.id에서 id로 묶이는 바람에 id.id로 나오는데 해결을 할 수가 없음
 
         const user = await User.findById(userId);
 
