@@ -20,6 +20,7 @@ export default function ProductsPage() {
     setOpenFilter(false);
   };
 
+
   return (
     <>
       <Helmet>
@@ -44,7 +45,7 @@ export default function ProductsPage() {
 
         <ProductList products={PRODUCTS} />
         <ProductCartWidget />
-        <Paging/>
+        <Paging />
       </Container>
     </>
   );
