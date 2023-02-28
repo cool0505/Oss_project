@@ -11,6 +11,7 @@ import ProductsPage from './pages/ProductsPage';
 import DashboardAppPage from './pages/DashboardAppPage';
 import Loginp from './login';
 import Signup from './signup';
+import Signuser from './signuser';
 
 // ----------------------------------------------------------------------
 
@@ -44,6 +45,10 @@ export default function Router() {
     {
       path: '/signup',
       element: <Signup />,
+    },
+    {
+      path: '/signuser',
+      element: <Signuser />,
     },
     {
       element: <SimpleLayout />,

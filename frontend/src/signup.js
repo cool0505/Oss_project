@@ -13,7 +13,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { fetchSignup,fetchcheckId } from "./servies";
+import { fetchSignup,fetchcheckId,fetchcheckUsername,fetchcheckEmail} from "./servies";
 import CheckIcon from '@mui/icons-material/Check';
 import InputAdornment from '@mui/material/InputAdornment';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
@@ -40,6 +40,12 @@ const theme = createTheme();
 
 export default function SignUp() {
 
+  const [id,setid] = useState('');
+  const [id_error,setid_error] = useState(false);
+  const [id_message,setid_message] = useState('');
+  const [id_check,setid_check] = useState('');
+
+
   const [username,setusername] = useState('');
   const [username_error,setusername_error] = useState(false);
   const [username_message,setusername_message] = useState('');
@@ -56,6 +62,62 @@ export default function SignUp() {
   const [confirmpassword,setconfirmpassword] = useState('');
   const [confirmpassword_error,setconfirmpassword_error] = useState(false);
   const [confirmpassword_message,setconfirmpassword_message] = useState('');
+
+  const id_onChange = (e)=> {
+    setid(e.target.value)
+  }
+  useEffect(() => {
+  	if(id.length>0) {
+    	id_validation();
+    } 
+  }, [id])
+  async function id_onBlur(e){
+    const req = {
+      id
+    };
+    const checkreq = await fetchcheckId(req)
+    console.log(checkreq)
+    setid_check(checkreq)
+    if (checkreq=='fail'){
+      setid_error(true)
+      setid_message('중복된아이디입니다.')
+    } 
+
+  }
+
+  const id_validation =()=>{
+    let check = /[~!@#$%^&*()_+|<>?:{}.,/;='"]/;
+    console.log(id)
+    if(check.test(id)){
+      setid_error(true)
+      setid_message("특수기호는 입력 하실 수 없습니다.")
+      setid_check('fail')
+    }
+    else if(id.length<3 || id.length>25){
+      setid_error(true)
+      setid_message("5글자 이상 25글자 이하로 입력하십시오")
+      setid_check('fail')
+    }
+    else{
+      setid_error(false)
+      setid_message('')
+      setid_check('suceess')
+    }
+  }
+
+  function idcheckicon() {
+    if(id_check=='success'){
+      return (<CheckIcon fontSize="small"/> )
+    }
+    else if (id_check=='fail'){
+      return (<HighlightOffIcon fontSize="small"/>)
+    }
+    else{
+      return('')
+    }
+  }
+
+
   const username_onChange = (e)=> {
     setusername(e.target.value)
   }
@@ -68,9 +130,14 @@ export default function SignUp() {
     const req = {
       username
     };
-    const checkreq = await fetchcheckId(req)
+    const checkreq = await fetchcheckUsername(req)
     console.log(checkreq)
     setusername_check(checkreq)
+    if (checkreq=='fail'){
+      setusername_error(true)
+      setusername_message('중복된아이디입니다.')
+    } 
+
   }
 
   const username_validation =()=>{
@@ -80,7 +147,7 @@ export default function SignUp() {
       setusername_error(true)
       setusername_message("특수기호나 한글은 입력 하실 수 없습니다.")
     }
-    else if(username.length<5 || username.length>25){
+    else if(username.length<3 || username.length>25){
       setusername_error(true)
       setusername_message("5글자 이상 25글자 이하로 입력하십시오")
     }
@@ -115,7 +182,7 @@ export default function SignUp() {
     const req = {
       email
     };
-    fetchcheckId(req)
+    fetchcheckEmail(req)
   }
 
   const email_validation =()=>{
@@ -145,14 +212,14 @@ export default function SignUp() {
     const req = {
       password
     };
-    fetchcheckId(req)
+
   }
 
 const password_validation =()=>{
 
-  if(!/^[a-zA-Z0-9]{10,255}$/.test(password)){
+  if(!/^[a-zA-Z0-9]{8,16}$/.test(password)){
   
-    setpassword_message('숫자와 영문자 조합으로 10자리이상 사용해야 합니다.');
+    setpassword_message('숫자와 영문자 조합으로 8자리이상 사용해야 합니다.');
     setpassword_error(true)
  
   
@@ -215,20 +282,26 @@ const password_validation =()=>{
       setconfirmpassword_message('')
     }
   } 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
 
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-      const Name=data.get('username');
+      const id = data.get('id')
+      const username=data.get('username');
       const email=data.get('email');
-      const password=data.get('password');
+      const pw=data.get('password');
   
     const req = {
-        Name,
+        id,
         email,
-        password
+        pw,
+        username,
       };
-    fetchSignup(req);
+    const signres = await fetchSignup(req);
+    console.log(signres)
+    if (signres=='success'){
+      window.location.replace("/signuser?id="+id);  
+    }
     console.log(req)
   };
 
@@ -254,13 +327,36 @@ const password_validation =()=>{
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
+            <Grid item xs={12} >
+                <TextField
+                  autoComplete="given-id"
+                  name="id"
+                  required
+                  id="id"
+                  label="아이디"
+                  autoFocus   
+                  fullWidth
+                  value={id} 
+                  onBlur={id_onBlur}
+                  onChange={id_onChange}
+                  error={id_error}
+                  helperText={id_message}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                          {idcheckicon()}
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              </Grid>
               <Grid item xs={12} >
                 <TextField
                   autoComplete="given-name"
                   name="username"
                   required
                   id="username"
-                  label="아이디"
+                  label="닉네임"
                   autoFocus   
                   fullWidth
                   value={username} 

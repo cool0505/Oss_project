@@ -9,11 +9,14 @@ export const fetchLogin = async (test) => {
   console.log(test)
   
   //하는중 원래는 아래쪽
-   await axios.post('http://192.168.1.9:3000/login', test)
+  return await axios.post('http://192.168.1.9:3000/login', test)
     .then(function (response) {
-        user.User(response.data.id,response.data.sc,response.data.sc,response.data.sc,response.data.sc,response.data.sc)
-        if(response.data.sc == '200')     
-          return 'success'
+      console.log(response.data.sc)
+        // user.User(response.data.id,response.data.sc,response.data.sc,response.data.sc,response.data.sc,response.data.sc)
+        if(response.data.sc == '200'){   
+            console.log("asdasdsad")
+            return 'success';
+        }
         else
           return 'fail';
     })
@@ -42,14 +45,53 @@ export const fetchLogin = async (test) => {
       }); 
     };
 
+    export const fetchcheckUsername = async (test) => {
+      console.log(test)
+      //하는중 원래는 아래쪽
+      return await axios.post('http://192.168.1.9:3000/signup/usernameCheck', test)
+        .then(function (response) {
+            console.log(response.data.sc)
+            if(response.data.sc == '200'){
+              console.log('sdfsdfsdf') 
+                return 'success';
+            }
+            else
+                return 'fail';
+        })
+        .catch(function (error) {
+            console.log(error);
+            return 'fail';
+        }); 
+      };
+
+      export const fetchcheckEmail = async (test) => {
+        console.log(test)
+        //하는중 원래는 아래쪽
+        return await axios.post('http://192.168.1.9:3000/signup/emailCheck', test)
+          .then(function (response) {
+              console.log(response.data.sc)
+              if(response.data.sc == '200'){
+                console.log('sdfsdfsdf') 
+                  return 'success';
+              }
+              else
+                  return 'fail';
+          })
+          .catch(function (error) {
+              console.log(error);
+              return 'fail';
+          }); 
+        };
+  
+
     export const fetchSignup = async (test) => {
       console.log(test)
   
       //하는중 원래는 아래쪽
-      axios.post('http://192.168.1.9:3000/signup/check', test)
+      return await axios.post('http://192.168.1.9:3000/signup', test)
         .then(function (response) {
             console.log(response.data.sc)
-            if(response.data.sc === '200')          
+            if(response.data.sc == '200')          
                 return 'success';
             else
                 return 'fail';
@@ -59,6 +101,23 @@ export const fetchLogin = async (test) => {
             return 'fail';
         });   
       };
+      export const fetchSignuser = async (test) => {
+        console.log(test)
+    
+        //하는중 원래는 아래쪽
+        axios.post('http://192.168.1.9:3000/signup/info', test)
+          .then(function (response) {
+              console.log(response.data.sc)
+              if(response.data.sc == '200')          
+                  return 'success';
+              else
+                  return 'fail';
+          })
+          .catch(function (error) {
+              console.log(error);
+              return 'fail';
+          });   
+        };
 
 
       export const fetchMain = async (test) => {

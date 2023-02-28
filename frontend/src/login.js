@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect} from 'react';
 import TextField from '@mui/material/TextField';
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
@@ -12,17 +12,17 @@ import Container from '@mui/material/Container';
 import { fetchLogin } from "./servies";
 import { ContactSupportOutlined } from '@mui/icons-material';
 
-
 export default function Login() {
   const [id, setid] = useState('');    // 사용자가 입력한 아이디 저장
   const [pw, setPw] = useState('');    // 사용자가 입력한 비밀번호 저장
   console.log(id)
+  
   const req = {
     id,
     pw,
-  };
-  async function checklogin(){
-    const loginres = await fetchLogin(req);
+  }; 
+  async function checklogin(){   
+    const loginres =  await fetchLogin(req);
     console.log(loginres)
      if (loginres=='success'){
        console.log('성공')
