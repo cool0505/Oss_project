@@ -15,7 +15,7 @@ export const fetchLogin = async (test) => {
         // user.User(response.data.id,response.data.sc,response.data.sc,response.data.sc,response.data.sc,response.data.sc)
         if(response.data.sc == '200'){   
             console.log("asdasdsad")
-            return 'success';
+            return response.data;
         }
         else
           return 'fail';
@@ -157,5 +157,26 @@ export const fetchLogin = async (test) => {
             }); 
             
           };
+
+
+          export const fetchproduct = async (test) => {
+            console.log(test)
+            
+            //하는중 원래는 아래쪽
+            return await axios.get('http://192.168.1.9:3000/nutritional/information?offset='+test)
+              .then(function (response) {
+                  if(response.data.sc == '200') {
+                    console.log(response.data.nutritional)
+                    return response.data.nutritional
+                  }
+                  else
+                    return 'fail';
+              })
+              .catch(function (error) {
+                  console.log(error);
+                  return 'fail';
+              }); 
+              
+            };
 
           

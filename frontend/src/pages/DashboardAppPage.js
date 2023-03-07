@@ -1,5 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import { faker } from '@faker-js/faker';
+import { useState, useEffect } from 'react';
 // @mui
 import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Typography } from '@mui/material';
@@ -18,28 +19,20 @@ import {
   AppConversionRates,
 } from '../sections/@dashboard/app';
 import { fetchMain } from 'src/servies';
+import StarRatings from 'react-star-ratings';
+import axios from 'axios';
 
 // ----------------------------------------------------------------------
 const accessToken = ''
-const score = 60
-const id = "cool0505"
-const dashchart=['비타민','비타민','비타민','비타민','비타민','비타민','비타민','비타민','비타민','비타민','비타민'];
+const score = 90
+
+const dashchart=['비타민','비타민1','비타민2','비타민3','비타민','비타민','비타민','비타민','비타민','비타민','비타민'];
 const dashchart1=[20,20,20,20,20,20,20,20,20,20,20];
 const dashchart2=[40,40,30,50,40,60,50,40,80,90,10];
 const dashchart3=[70,60,50,40,30,20,80,40,100,100,20];
+
 let widjetcolor1
-const req = {
-  id,
-  accessToken,
-};
-async function checkmain(){
-  const loginres = await fetchMain(req);
-  console.log(loginres)
-   if (loginres=='success'){
-     console.log('성공')
-     window.location.replace("/dashboard/app");  
-   }
- }
+
  
 
 if(score>=70){
@@ -52,6 +45,22 @@ else{
    widjetcolor1="error"
 }
 export default function DashboardAppPage() {
+  const [ id, setId ]= useState(sessionStorage.getItem("id"))
+  const [loading, setLoading] = useState(false);
+  const accessToken=sessionStorage.getItem("accessToken")
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+       const response =await axios.post(
+        "http://192.168.1.9:3000/dashboard/app",{id},{headers:{
+          authorization: accessToken
+        }}
+      );
+      console.log(response.data.nutrient)
+      setLoading(false);
+    };
+    fetchData();
+  }, []);
   const theme = useTheme();
 
 
@@ -85,8 +94,8 @@ export default function DashboardAppPage() {
 
           <Grid item xs={12} md={6} lg={8}>
             <AppWebsiteVisits
-              title="영양제 섭취량"
-              subheader="(+43%) than last year"
+              title="영양소 섭취량"
+              subheader= {id+'님의 현재 영양제 섭취량입니다.'}
               chartLabels={[
                 dashchart[0],
                 dashchart[1],
@@ -124,13 +133,26 @@ export default function DashboardAppPage() {
           </Grid>
 
           <Grid item xs={12} md={6} lg={4}>
-            <AppCurrentVisits
-              title="Current Visits"
+            <AppCurrentSubject
+              title="필수 영양소 섭취량"
+              chartLabels={['비타민', '비타민', '비타민', '비타민', '비타민', '비타민']}
               chartData={[
-                { label: 'America', value: 4344 },
-                { label: 'Asia', value: 5435 },
-                { label: 'Europe', value: 1443 },
-                { label: 'Africa', value: 4443 },
+                { name: id+'님 의 섭취량', data: [80, 50, 30, 40, 100, 20] },
+                { name: '다른이용자평균', data: [20, 30, 40, 80, 20, 80] },
+                { name: '권장 섭취량', data: [44, 76, 78, 13, 43, 10] },
+              ]}
+              chartColors={[...Array(6)].map(() => theme.palette.text.secondary)}
+            />
+          </Grid>
+
+          <Grid item xs={12} md={6} lg={4}>
+            <AppCurrentVisits
+              title="섭취량 현황"
+              chartData={[
+                { label: '잘해요', value: 4344 },
+                { label: '', value: 5435 },
+                { label: '부족해요', value: 1443 },
+                { label: '과해요', value: 4443 },
               ]}
               chartColors={[
                 theme.palette.primary.main,
@@ -143,8 +165,8 @@ export default function DashboardAppPage() {
 
           <Grid item xs={12} md={6} lg={8}>
             <AppConversionRates
-              title="Conversion Rates"
-              subheader="(+43%) than last year"
+              title="이런영양소 먹는걸 추천해요"
+              subheader={id+"님을 위한 영양소 추천서비스에요"}
               chartData={[
                 { label: 'Italy', value: 400 },
                 { label: 'Japan', value: 430 },
@@ -160,25 +182,14 @@ export default function DashboardAppPage() {
             />
           </Grid>
 
-          <Grid item xs={12} md={6} lg={4}>
-            <AppCurrentSubject
-              title="Current Subject"
-              chartLabels={['English', 'History', 'Physics', 'Geography', 'Chinese', 'Math']}
-              chartData={[
-                { name: 'Series 1', data: [80, 50, 30, 40, 100, 20] },
-                { name: 'Series 2', data: [20, 30, 40, 80, 20, 80] },
-                { name: 'Series 3', data: [44, 76, 78, 13, 43, 10] },
-              ]}
-              chartColors={[...Array(6)].map(() => theme.palette.text.secondary)}
-            />
-          </Grid>
+          
 
           <Grid item xs={12} md={6} lg={8}>
             <AppNewsUpdate
-              title="News Update"
+              title="추천 영양제에요"
               list={[...Array(5)].map((_, index) => ({
                 id: faker.datatype.uuid(),
-                title: faker.name.jobTitle(),
+                title: dashchart[index],
                 description: faker.name.jobTitle(),
                 image: `/assets/images/covers/cover_${index + 1}.jpg`,
                 postedAt: faker.date.recent(),
@@ -231,6 +242,7 @@ export default function DashboardAppPage() {
               ]}
             />
           </Grid>
+      
 
           <Grid item xs={12} md={6} lg={8}>
             <AppTasks

@@ -16,7 +16,7 @@ export default function Login() {
   const [id, setid] = useState('');    // 사용자가 입력한 아이디 저장
   const [pw, setPw] = useState('');    // 사용자가 입력한 비밀번호 저장
   console.log(id)
-  
+  let sessionStorage = window.sessionStorage
   const req = {
     id,
     pw,
@@ -24,8 +24,11 @@ export default function Login() {
   async function checklogin(){   
     const loginres =  await fetchLogin(req);
     console.log(loginres)
-     if (loginres=='success'){
+     if (loginres.sc=='200'){
        console.log('성공')
+      sessionStorage.setItem("id", loginres.id);
+      sessionStorage.setItem("accessToken", loginres.accessToken);
+      sessionStorage.setItem("refreshToken", loginres.refreshToken);
        window.location.replace("/dashboard/app");  
      }
    }

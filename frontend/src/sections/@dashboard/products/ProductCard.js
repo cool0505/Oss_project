@@ -7,6 +7,8 @@ import { fCurrency } from '../../../utils/formatNumber';
 // components
 import Label from '../../../components/label';
 import { ColorPreview } from '../../../components/color-utils';
+import StarRatings from 'react-star-ratings';
+
 
 // ----------------------------------------------------------------------
 
@@ -25,38 +27,28 @@ ShopProductCard.propTypes = {
 };
 
 export default function ShopProductCard({ product }) {
-  const { name, cover, price, colors, status, priceSale } = product;
+  console.log(product)
+  const { company, name, stars, id, price} = product;
 
   return (
     <Card>
       <Box sx={{ pt: '100%', position: 'relative' }}>
-        {status && (
-          <Label
-            variant="filled"
-            color={(status === 'sale' && 'error') || 'info'}
-            sx={{
-              zIndex: 9,
-              top: 16,
-              right: 16,
-              position: 'absolute',
-              textTransform: 'uppercase',
-            }}
-          >
-            {status}
-          </Label>
-        )}
-        <StyledProductImg alt={name} src={cover} />
+        <StyledProductImg alt={name} src={'http://192.168.1.9:3000/image/'+id+'.jpg'} />
       </Box>
 
       <Stack spacing={2} sx={{ p: 3 }}>
+      <Link color="inherit" underline="hover">
+          <Typography variant="caption" color='gray'noWrap>
+            {company}
+          </Typography>
+        </Link>
         <Link color="inherit" underline="hover">
-          <Typography variant="subtitle2" noWrap>
+          <Typography variant="subtitle2" >
             {name}
           </Typography>
         </Link>
 
         <Stack direction="row" alignItems="center" justifyContent="space-between">
-          <ColorPreview colors={colors} />
           <Typography variant="subtitle1">
             <Typography
               component="span"
@@ -65,11 +57,22 @@ export default function ShopProductCard({ product }) {
                 color: 'text.disabled',
                 textDecoration: 'line-through',
               }}
-            >
-              {priceSale && fCurrency(priceSale)}
+            >                    
+            </Typography>
+            <Typography variant="caption">
+            <StarRatings
+            rating={stars}
+            starRatedColor='#FFD400'
+            numberOfStars={5}
+            name='rating'
+            starDimension="1em"
+            starSpacing="0.001em"
+            />   
+            {' '}
+            ({stars}/5)
             </Typography>
             &nbsp;
-            {fCurrency(price)}
+            {fCurrency(price)}원
           </Typography>
         </Stack>
       </Stack>
