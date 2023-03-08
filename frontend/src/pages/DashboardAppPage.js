@@ -190,7 +190,7 @@ export default function DashboardAppPage() {
               list={[...Array(5)].map((_, index) => ({
                 id: faker.datatype.uuid(),
                 title: dashchart[index],
-                description: faker.name.jobTitle(),
+                description: dashchart[index],
                 image: `/assets/images/covers/cover_${index + 1}.jpg`,
                 postedAt: faker.date.recent(),
               }))}
