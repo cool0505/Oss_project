@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import { useState, useEffect } from 'react';
 // @mui
-import { Container, Stack, Typography } from '@mui/material';
+import { Container, Stack, Typography,Breadcrumbs } from '@mui/material';
 // components
 import { ProductSort, ProductList, ProductCartWidget, ProductFilterSidebar } from '../sections/@dashboard/products';
 // mock
@@ -75,7 +75,20 @@ export default function ProductsPage() {
           Products
         </Typography>
 
-        
+        {/* <Breadcrumbs aria-label="breadcrumb">
+  <StyledBreadcrumb
+    component="a"
+    href="#"
+    label="Home"
+    icon={<HomeIcon fontSize="small" />}
+  />
+  <StyledBreadcrumb component="a" href="#" label="Catalog" />
+  <StyledBreadcrumb
+    label="Accessories"
+    deleteIcon={<ExpandMoreIcon />}
+    onDelete={handleClick}
+  />
+</Breadcrumbs> */}
         <Stack direction="row" flexWrap="wrap-reverse" alignItems="center" justifyContent="flex-end" sx={{ mb: 5 }}>
           <Stack direction="row" spacing={1} flexShrink={0} sx={{ my: 1 }}>
             <ProductFilterSidebar

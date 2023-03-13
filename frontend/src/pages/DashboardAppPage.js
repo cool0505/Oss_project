@@ -35,34 +35,40 @@ let widjetcolor1
 
  
 
-if(score>=70){
-   widjetcolor1="info"
-}
-else if(score>=40){
-  widjetcolor1="warning"
-}
-else{
-   widjetcolor1="error"
-}
+
 export default function DashboardAppPage() {
   const [ id, setId ]= useState(sessionStorage.getItem("id"))
   const [loading, setLoading] = useState(false);
   const accessToken=sessionStorage.getItem("accessToken")
+  const [ res, setres ]= useState(false)
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
-       const response =await axios.post(
+      setLoading(false);
+       var response =await axios.post(
         "http://192.168.1.9:3000/dashboard/app",{id},{headers:{
           authorization: accessToken
         }}
       );
-      console.log(response.data.nutrient)
-      setLoading(false);
+      console.log(response.data)
+      setres(response.data)
+      setLoading(true);
     };
     fetchData();
   }, []);
-  const theme = useTheme();
 
+  if(res.healthScore>=70){
+    widjetcolor1="info"
+ }
+ else if(res.healthScore>=40){
+   widjetcolor1="warning"
+ }
+ else{
+    widjetcolor1="error"
+ }
+  const theme = useTheme();
+  if(loading==false){
+    return("로딩중")
+  }
 
   return (
     <>
@@ -77,19 +83,19 @@ export default function DashboardAppPage() {
 
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="건강점수" total= {score} color={widjetcolor1} icon={'ant-design:android-filled'} />
+            <AppWidgetSummary title="건강점수" total= {res.healthScore} color={widjetcolor1} icon={'ant-design:android-filled'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="먹고있는 영양소 수" total={7} color="info" icon={'ant-design:apple-filled'} />
+            <AppWidgetSummary title="먹고있는 영양소 수" total={res.countNutrient} color="info" icon={'ant-design:apple-filled'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="영양제 수" total={1723315} color="warning" icon={'ant-design:windows-filled'} />
+            <AppWidgetSummary title="영양제 수" total={res.countNutritional} color="warning" icon={'ant-design:windows-filled'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="위험해요" total={234} color="error" icon={'ant-design:bug-filled'} />
+            <AppWidgetSummary title="위험해요" total={res.tmtl} color="error" icon={'ant-design:bug-filled'} />
           </Grid>
 
           <Grid item xs={12} md={6} lg={8}>
@@ -118,17 +124,18 @@ export default function DashboardAppPage() {
                 },
                 {
                   name: '권장량',
-                  type: 'area',
+                  type: 'column',
                   fill: 'gradient',
                   data: dashchart2,
                 },
                 {
                   name: '상한섭취량',
-                  type: 'line',
+                  type: 'column',
                   fill: 'solid',
                   data: dashchart3,
                 },
               ]}
+
             />
           </Grid>
 

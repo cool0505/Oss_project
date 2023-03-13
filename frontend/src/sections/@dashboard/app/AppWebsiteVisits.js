@@ -34,12 +34,14 @@ export default function AppWebsiteVisits({ title, subheader, chartLabels, chartD
     },
   });
 
+  
+
   return (
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} />
 
       <Box sx={{ p: 3, pb: 1 }} dir="ltr">
-        <ReactApexChart type="line" series={chartData} options={chartOptions} height={364} />
+        <ReactApexChart type="bar" series={chartData} options={chartOptions} height={364} />
       </Box>
     </Card>
   );
