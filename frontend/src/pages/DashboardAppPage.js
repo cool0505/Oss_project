@@ -27,16 +27,13 @@ const accessToken = ''
 const score = 90
 
 const dashchart=['비타민','비타민1','비타민2','비타민3','비타민','비타민','비타민','비타민','비타민','비타민','비타민'];
-const dashchart1=[20,20,20,20,20,20,20,20,20,20,20];
-const dashchart2=[40,40,30,50,40,60,50,40,80,90,10];
-const dashchart3=[70,60,50,40,30,20,80,40,100,100,20];
+
 
 let widjetcolor1
 
- 
-
 
 export default function DashboardAppPage() {
+
   const [ id, setId ]= useState(sessionStorage.getItem("id"))
   const [loading, setLoading] = useState(false);
   const accessToken=sessionStorage.getItem("accessToken")
@@ -102,39 +99,12 @@ export default function DashboardAppPage() {
             <AppWebsiteVisits
               title="영양소 섭취량"
               subheader= {id+'님의 현재 영양제 섭취량입니다.'}
-              chartLabels={[
-                dashchart[0],
-                dashchart[1],
-                dashchart[2],
-                dashchart[3],
-                dashchart[4],
-                dashchart[5],
-                dashchart[6],
-                dashchart[7],
-                dashchart[8],
-                dashchart[9],
-                dashchart[10],
-              ]}
-              chartData={[
-                {
-                  name: '섭취량',
-                  type: 'column',
-                  fill: 'solid',
-                  data: dashchart1,
-                },
-                {
-                  name: '권장량',
-                  type: 'column',
-                  fill: 'gradient',
-                  data: dashchart2,
-                },
-                {
-                  name: '상한섭취량',
-                  type: 'column',
-                  fill: 'solid',
-                  data: dashchart3,
-                },
-              ]}
+              userEating ={res.userEating}
+              countNutrient={res.countNutrient}
+              dailyEating={res.dailyEating}
+
+
+              
 
             />
           </Grid>

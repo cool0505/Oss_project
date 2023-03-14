@@ -118,12 +118,15 @@ export default function useChart(options) {
       horizontalAlign: 'right',
       markers: {
         radius: 12,
+        fillColors:[]
       },
       fontWeight: 500,
       itemMargin: { horizontal: 12 },
       labels: {
         colors: theme.palette.text.primary,
       },
+      customLegendItems: [],
+      showForSingleSeries: true,
     },
 
     // plotOptions
