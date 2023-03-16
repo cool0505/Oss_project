@@ -33,7 +33,7 @@ export default function ShopProductCard({ product }) {
   return (
     <Card>
       <Box sx={{ pt: '100%', position: 'relative' }}>
-        <StyledProductImg alt={name} src={'http://192.168.1.9:3000/image/'+id+'.jpg'} />
+        <StyledProductImg alt={name} src={'http://210.119.32.156:3000/image/'+id+'.jpg'} />
       </Box>
 
       <Stack spacing={2} sx={{ p: 3 }}>

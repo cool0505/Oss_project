@@ -95,7 +95,7 @@ export default function DashboardAppPage() {
             <AppWidgetSummary title="위험해요" total={res.tmtl} color="error" icon={'ant-design:bug-filled'} />
           </Grid>
 
-          <Grid item xs={12} md={6} lg={8}>
+          <Grid item xs={12} md={6} lg={5.5}>
             <AppWebsiteVisits
               title="영양소 섭취량"
               subheader= {id+'님의 현재 영양제 섭취량입니다.'}
