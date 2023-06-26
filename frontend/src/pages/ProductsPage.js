@@ -11,6 +11,9 @@ import axios from 'axios';
 import '../Paging.css';
 import Pagination from "react-js-pagination";
 import StarRatings from 'react-star-ratings';
+import Link from '@mui/material/Link';
+import Autocomplete from '@mui/material/Autocomplete';
+import TextField from '@mui/material/TextField';
 // ----------------------------------------------------------------------
 
 
@@ -21,6 +24,7 @@ export default function ProductsPage() {
   const [loading, setLoading] = useState(false);
   const [posts, setPosts] = useState(false);
   const [page, setPage] = useState(1);
+  const [value, setValue] = useState('all');
 
   const handlePageChange = (page) => {
     setPage(page);
@@ -29,10 +33,10 @@ export default function ProductsPage() {
     const fetchData = async () => {
       setLoading(true);
       const response = await axios.get(
-        "http://192.168.1.9:3000/nutritional/information?offset="+page
+        "http://192.168.1.9:3000/nutritional/include?offset="+page+"&info=all"
       );
-      console.log(response.data.nutritional)
-      setPosts(response.data.nutritional);
+      console.log(response.data.includeInfo)
+      setPosts(response.data.includeInfo);
       setLoading(false);
     };
     fetchData();
@@ -41,14 +45,27 @@ export default function ProductsPage() {
     const fetchData = async () => {
       setLoading(true);
       const response = await axios.get(
-        "http://192.168.1.9:3000/nutritional/information?offset="+page
+        "http://192.168.1.9:3000/nutritional/include?offset="+page+"&info="+value
       );
-      console.log(response.data.nutritional)
-      setPosts(response.data.nutritional);
+      console.log(response.data.includeInfo)
+      setPosts(response.data.includeInfo);
       setLoading(false);
     };
     fetchData();
   }, [page]);
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      setPage(1)
+      const response = await axios.get(
+        "http://192.168.1.9:3000/nutritional/include?offset="+page+"&info="+value
+      );
+      console.log(response.data.includeInfo)
+      setPosts(response.data.includeInfo);
+      setLoading(false);
+    };
+    fetchData();
+  }, [value]);
   
 
   const [openFilter, setOpenFilter] = useState(false);
@@ -60,10 +77,16 @@ export default function ProductsPage() {
   const handleCloseFilter = () => {
     setOpenFilter(false);
   };
+ 
+  const onChange =(e) =>{
+    setValue(e.target.value)
+  }
+
   
   if(posts==false){
     return('로딩중')
   }
+  
   return (
     <>
     
@@ -74,27 +97,15 @@ export default function ProductsPage() {
         <Typography variant="h4" sx={{ mb: 5 }}>
           Products
         </Typography>
-
-        {/* <Breadcrumbs aria-label="breadcrumb">
-  <StyledBreadcrumb
-    component="a"
-    href="#"
-    label="Home"
-    icon={<HomeIcon fontSize="small" />}
-  />
-  <StyledBreadcrumb component="a" href="#" label="Catalog" />
-  <StyledBreadcrumb
-    label="Accessories"
-    deleteIcon={<ExpandMoreIcon />}
-    onDelete={handleClick}
-  />
-</Breadcrumbs> */}
+        {value}
         <Stack direction="row" flexWrap="wrap-reverse" alignItems="center" justifyContent="flex-end" sx={{ mb: 5 }}>
           <Stack direction="row" spacing={1} flexShrink={0} sx={{ my: 1 }}>
             <ProductFilterSidebar
               openFilter={openFilter}
               onOpenFilter={handleOpenFilter}
               onCloseFilter={handleCloseFilter}
+              onChange={onChange}
+              value={value}
             />
             <ProductSort />
           </Stack>

@@ -29,7 +29,7 @@ const score = 90
 const dashchart=['비타민','비타민1','비타민2','비타민3','비타민','비타민','비타민','비타민','비타민','비타민','비타민'];
 
 
-let widjetcolor1
+let widjetcolor1,widjetcolor4
 
 
 export default function DashboardAppPage() {
@@ -53,7 +53,7 @@ export default function DashboardAppPage() {
     fetchData();
   }, []);
 
-  if(res.healthScore>=70){
+if(res.healthScore>=70){
     widjetcolor1="info"
  }
  else if(res.healthScore>=40){
@@ -62,6 +62,12 @@ export default function DashboardAppPage() {
  else{
     widjetcolor1="error"
  }
+if(res.tmtl ==0){
+  widjetcolor4 = 'info'
+}
+else{
+  widjetcolor4="error"
+}
   const theme = useTheme();
   if(loading==false){
     return("로딩중")
@@ -92,7 +98,7 @@ export default function DashboardAppPage() {
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="위험해요" total={res.tmtl} color="error" icon={'ant-design:bug-filled'} />
+            <AppWidgetSummary title="위험해요" total={res.tmtl} color={widjetcolor4} icon={'ant-design:bug-filled'} />
           </Grid>
 
           <Grid item xs={12} md={6} lg={5.5}>

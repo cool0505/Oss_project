@@ -12,11 +12,16 @@ AppWebsiteVisits.propTypes = {
   title: PropTypes.string,
   subheader: PropTypes.string,
 };
-const dashchartname=[40,40,30,50,40,60,50,40,80,90,10];
-const dashchartmax=[70,60,50,40,30,20,80,40,100,100,20];
-const dashchartcommend=[70,60,50,40,30,20,80,40,100,100,20];
+
 export default function AppWebsiteVisits({ title, subheader, userEating,countNutrient,dailyEating,...other }) {
-  
+  const numchart = []
+  for(let i=0; i<countNutrient; i ++){
+    numchart.push(i)
+    if(i==5){
+      break
+    }
+  }
+  console.log(numchart)
   const theme = useTheme();
  
   const chartOptions = useChart({
@@ -61,47 +66,57 @@ export default function AppWebsiteVisits({ title, subheader, userEating,countNut
 
     
   });
-  console.log(dailyEating[0].commend)
-  const name=Object.keys(userEating)
-  function chartdata(name,eating,commend,max){
-    if (max==NaN){
-      max=0;
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
     }
+    return array;
+  }
+  const name=shuffleArray(Object.keys(userEating))
+
+  
+  function chartdata(name,eating,commend,max){
+  let goal=0
+  if (max==null){
+      max=0;    
+    }
+  
+  if (max==0 || max>eating*2){
+    goal=[{
+      name: '권장량',
+      value:  commend,
+      strokeHeight: 5,
+      strokeColor: theme.palette.warning.main
+
+    }]}
+  else{
+    goal=[{
+      name: '상한량',
+      value: max,
+      strokeHeight: 5,
+      strokeColor: theme.palette.error.main
+    },
+    {
+      name: '권장량',
+      value:  commend,
+      strokeHeight: 5,
+      strokeColor: theme.palette.warning.main
+    }]
+  }
+
   return(
   {
     x:name,
     y:eating,
-    goals: [
-      {
-        name: 'Expected',
-        value: max,
-        strokeHeight: 5,
-        strokeColor: theme.palette.error.main
-  
-      },
-      {
-        name: 'Expected',
-        value:  commend,
-        strokeHeight: 5,
-        strokeColor: theme.palette.warning.main
-  
-      },
-    ]
+    goals: 
+      goal
+
   }
   )
 }
 
-  const chartData1 ={
-    series:[
-    {
-      name: '섭취량',
-      type: 'column',
-      fill: 'solid',
-      data: [
-      chartdata(name[1],Number(userEating[name[1]].eating),Number(userEating[name[1]].max)),
-    ]
-    }
-  ]}
+
     function chartdata1(name,eating,commend,max){
     return(
         [{
@@ -114,21 +129,17 @@ export default function AppWebsiteVisits({ title, subheader, userEating,countNut
         }]  
     )
   }
-  console.log(chartdata1(name[1],Number(userEating[name[1]].eating),Number(userEating[name[1]].max)))
-  console.log(chartData1.series)
- 
+
 
   return (
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} />
 
       <Box sx={{ p: 3, pb: 1 }} dir="ltr" style={{display:'flex',flexDirection:'row'}} >
-        <ReactApexChart type="bar" series={chartdata1(name[0],Number(userEating[name[0]].eating),Number(userEating[name[0]].commend),Number(userEating[name[0]].max))} options={chartOptions} height={364} width={100} />
-        <ReactApexChart type="bar" series={chartdata1(name[1],Number(userEating[name[1]].eating),Number(userEating[name[1]].commend),Number(userEating[name[1]].max))} options={chartOptions} height={364} width={100}/>
-        <ReactApexChart type="bar" series={chartdata1(name[2],Number(userEating[name[2]].eating),Number(userEating[name[2]].commend),Number(userEating[name[2]].max))} options={chartOptions} height={364} width={100}/>
-        <ReactApexChart type="bar" series={chartdata1(name[3],Number(userEating[name[3]].eating),Number(userEating[name[3]].commend),Number(userEating[name[3]].max))} options={chartOptions} height={364} width={100}/>
-        {/* <ReactApexChart type="bar" series={chartdata1(name[4],Number(userEating[name[4]].eating),Number(userEating[name[4]].commend),Number(userEating[name[4]].max))} options={chartOptions} height={364} width={100}/>
-        <ReactApexChart type="bar" series={chartdata1(name[5],Number(userEating[name[5]].eating),Number(userEating[name[5]].commend),Number(userEating[name[5]].max))} options={chartOptions} height={364} width={100}/> */}
+        {numchart.map((item) => (
+                   <ReactApexChart type="bar" key={name[item]+"chart"} series={chartdata1(name[item],Number(userEating[name[item]].eating),Number(userEating[name[item]].commend),Number(userEating[name[item]].max))} options={chartOptions} height={364} width={100} />                 
+              ))} 
+       
       </Box>
     </Card>
   );

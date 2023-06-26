@@ -28,8 +28,8 @@ ShopProductCard.propTypes = {
 
 export default function ShopProductCard({ product }) {
   console.log(product)
-  const { company, name, stars, id, price} = product;
-
+  const { company, name, rating, id,iherb_price,naver_price} = product;
+  const price = Math.min(iherb_price,naver_price)
   return (
     <Card>
       <Box sx={{ pt: '100%', position: 'relative' }}>
@@ -61,7 +61,7 @@ export default function ShopProductCard({ product }) {
             </Typography>
             <Typography variant="caption">
             <StarRatings
-            rating={stars}
+            rating={rating}
             starRatedColor='#FFD400'
             numberOfStars={5}
             name='rating'
@@ -69,7 +69,7 @@ export default function ShopProductCard({ product }) {
             starSpacing="0.001em"
             />   
             {' '}
-            ({stars}/5)
+            ({rating}/5)
             </Typography>
             &nbsp;
             {fCurrency(price)}원
